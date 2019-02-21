@@ -1,0 +1,62 @@
+{% extends 'login_registration/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <form class="myForm" action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'first_name' %}
+                            <p class="error_message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="text" class="form-control" name="first_name" placeholder="First Name" value="{{first_name}}">
+            </div>
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'last_name' %}
+                            <p class="error_message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="text" class="form-control" name="last_name" placeholder="Last Name" value="{{last_name}}">
+            </div>
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'email' %}
+                            <p class="error_message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="text" class="form-control" name="email" placeholder="Email" value="{{email}}">
+            </div>
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'password' %}
+                            <p class="error_message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'confirm_password' %}
+                            <p class="error_message">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="password" class="form-control" name="confirmpw" placeholder="Confirm Password">
+            </div>
+            <input type="submit" class="btn btn-primary" value="Register">
+            <br>
+            <a href="{% url 'get_login_page' %}"> Already have an account? Login </a>
+        </form>
+    </div>
+{% endblock content %}

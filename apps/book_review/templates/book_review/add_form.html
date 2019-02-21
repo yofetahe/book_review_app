@@ -1,0 +1,61 @@
+{% extends 'book_review/base.html' %}
+
+{% block content %}
+    <div class="app_forms">
+        <form action="{% url 'save_book' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Book Title:</label>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'title' %}
+                            <p class="error_message">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <input type="text" name="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="author">Author:</label>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'selected_author' %}
+                            <p class="error_message">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <select name="selected_author" class="form-control">
+                    <option value=""></option>
+                    {% for author in authors %}
+                        <option value="{{author.id}}">{{author.first_name}} {{author.last_name}}</option>
+                    {% endfor %}
+                </select>
+                <label for="new_author">Or add a new author</label>
+                <input type="text" class="form-control" name="first_name" placeholder="Author First Name">
+                <input type="text" class="form-control" name="last_name" placeholder="Author Last Name">
+            </div>
+            <div class="form-group">
+                <label for="review">Review:</label>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'review' %}
+                            <p class="error_message">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <textarea name="review" class="form-control" cols="30" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <select name="rating" class="form-control">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <input type="submit" value="Add Book and Review" class="btn btn-primary">
+        </form>
+    </div>
+{% endblock content %}

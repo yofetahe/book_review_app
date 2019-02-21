@@ -1,0 +1,69 @@
+{% extends 'book_review/base.html' %}
+
+{% block content %}
+    <div class="left_side_content">
+        <p><b> Recent Book Reviews </b></p>
+        {% for book in latest_books %}
+            <div class="form-groupd">
+                <a href="{% url 'get_book_review' book.id %}">{{book.title}}</a>
+                <div class="book_review_content">
+                {% for review in book.reviews.all %}
+                    <div>
+                        <p style="display: inline-block;">Rating:</p>
+                        <p style="display: inline-block;"> 
+                            {% if review.rating == 5 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 4 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 3 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 2 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 1 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                        </p>
+                    </div>
+                    <p> <a href="{% url 'get_user_detail' review.user.id %}">{{review.user.first_name}}</a> says: {{review.review_content}}</p>
+                    <p>Posted on {{review.created_at|date:'Y-d-m'}}</p>
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="right_side_content">
+        <p><b> Other Books with Reviews </b></p>
+        {% for book in books %}
+           <p> <a href="{% url 'get_book_review' book.id %}">{{book.title}}</a> </p>
+        {% endfor %}
+    </div>
+{% endblock content %}

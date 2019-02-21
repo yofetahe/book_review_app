@@ -1,0 +1,67 @@
+.wrapper{
+    margin: 0 auto;
+    width: 80%;
+}
+.header_title{
+    margin: 10px 0px;
+}
+.left_side{
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+}
+.right_side{
+    display: inline-block;
+    width: 49.4%;
+    text-align: right;
+    vertical-align: top;
+}
+
+.edit_information{
+    display: inline-block;
+    width: 49.4%;
+    vertical-align: top;
+}
+
+.change_password{
+    display: inline-block;
+    width: 49%;
+    vertical-align: top;
+}
+
+.edit_description{
+    display: inline;
+}
+
+.comment_content{
+    padding-left: 40px;
+}
+.comment_form{
+    padding-left: 40px;
+}
+.error_message{
+    color:red;
+}
+
+
+.left_side_content{
+    display: inline-block;
+    width: 45%;
+    vertical-align: top;
+}
+.right_side_content{
+    display: inline-block;
+    width: 54.4%;
+    vertical-align: top;
+    padding-left: 60px;
+}
+.book_review_content{
+    padding-left: 30px;
+}
+
+.app_forms{
+    width: 40%;
+}
+.review_row{
+    border-top: 1px solid black;
+}

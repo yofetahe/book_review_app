@@ -1,0 +1,100 @@
+{% extends 'book_review/base.html' %}
+
+{% block content %}
+<div class="left_side_content">
+    <h3>{{book.title}}</h3>
+    <p>{{book.author.first_name}} {{book.author.last_name}}</p>
+    <p><b> Reviews </b></p>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.extra_tags == "delete_review" %}
+                <p class="error_message">{{message}}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    {% for review in book.reviews.all %}
+        <div class="form-groupd review_row">
+                <div>
+                        <p style="display: inline-block;">Rating:</p>
+                        <p style="display: inline-block;"> 
+                            {% if review.rating == 5 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 4 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 3 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 2 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                            {% if review.rating == 1 %} 
+                                {% load static %} 
+                                <img src="{% static 'book_review/images/active_star.png' %}" alt="active_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>
+                                <img src="{% static 'book_review/images/inactive_star.png' %}" alt="inactive_star" style="width:20px; height:20px;"/>                           
+                            {% endif %}
+                        </p>
+                    </div>
+            <p> <a href="{% url 'get_user_detail' review.user.id %}">{{review.user.first_name}}</a> says: {{review.review_content}}</p>
+            <p> 
+                Posted on {{review.created_at|date:'Y-d-m'}} 
+                {% if review.user.id == request.session.user_id %}
+                    &nbsp;&nbsp; | &nbsp;&nbsp;
+                    <a href="{% url 'delete_review' review.id book.id %}">Delete this Review</a>
+                {% endif %}
+            </p>
+        </div>
+    {% endfor %}
+</div>
+<div  class="right_side_content">
+        <form action="{% url 'submit_review' book.id %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="book_review">Review:</label>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.extra_tags == 'book_review' %}
+                            <p class="error_message">{{message}}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <textarea name="book_review" class="form-control" cols="30" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="rating">Rating:</label>
+                <select name="rating" class="form-control">
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <input type="submit" value="Submit Review" class="btn btn-primary">
+        </form>
+</div>
+{% endblock content %}
