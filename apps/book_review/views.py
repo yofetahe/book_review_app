@@ -9,8 +9,9 @@ def book_index(request):
         return redirect('../login/get_login_page')
 
     latest_books = Book.objects.all().order_by('-created_at')[:3]
+    
     books = Book.objects.all()
-    print(latest_books)
+    
     context = {
         "latest_books":latest_books,
         "books":books

@@ -8,6 +8,7 @@
                 <a href="{% url 'get_book_review' book.id %}">{{book.title}}</a>
                 <div class="book_review_content">
                 {% for review in book.reviews.all %}
+
                     <div>
                         <p style="display: inline-block;">Rating:</p>
                         <p style="display: inline-block;"> 
